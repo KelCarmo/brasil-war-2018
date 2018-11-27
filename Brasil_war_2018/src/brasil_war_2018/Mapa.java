@@ -7,6 +7,7 @@ package brasil_war_2018;
 
 import java.awt.List;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  *
@@ -102,19 +103,76 @@ public class Mapa {
         this.nome_regiao[4]= "SUL";
         
     }
-    
-    public String distruibuir_cor(int quantidade_jogadores){
+    /**
+     * Método para escolher entre duas cores caso esteja jogando 2 jogadores.
+     * @param cor1
+     * @param cor2
+     * @return 
+     */
+    public String cor_randomica(String cor1, String cor2){
+        Random gerador = new Random();
+        if(gerador.nextInt(100)<=49){
+            return cor1;
+        }
+        return cor2;
+    }
+    /** 
+     * Método  que auxilia na distribiucao randomica das cores para os estados. 
+     * O método será usado quando umas das cores já preencher a quantidade de estados
+     * e sobra o restante de estados sem cor para preencher com a cor que não completou a quantidade.
+     * 
+     * @param qtd_cor1 a quantidade de vezes que a cor 1 foi escolhida. Caso ela já completou os 12 estados ela
+     * retorna o valor 2 indicando para a função que chamou que a cor 2 deve preencher o restante dos estados
+     * @param qtd_cor2 caso a cor dois já preencheu todos os estados ela retorna 1 indicando que a cor 1 que deve ser usada.
+     * @return a indicação da cor que deve ser usada. 1 para cor 1 e 2 para a cor2 .
+     */
+    private int cor_escolhida(int qtd_cor1, int qtd_cor2){
+        if(qtd_cor1 == 12){
+            return 2;
+        }
+        return 1;
+            
+    }
+    /** 
+     * Método que distribui a cor entre os estados de forma randomica entre dois jogadores,
+     * ou seja, 12 estados para cada jogador
+     * @param quantidade_jogadores
+     * @return 
+     */
+    public void distruibuir_cor_dois_jogadores(int quantidade_jogadores,String cor1,String cor2){
+        
         if(quantidade_jogadores == 2){
+        int qtd_cor1=0,qtd_cor2=0;    
             
             for(int i =0; i<this.estados.size();i++){
-                //if(){
-               // }
-                //this.estados.get(i).setCor(cor);
-                
+                this.estados.get(i).setCor(this.cor_randomica(cor1, cor2));
+                //Caso nenhuma das cores já completou 12 estados
+                if(qtd_cor1 < 12 && qtd_cor2 < 12 ){
+                    if(this.estados.get(i).getCor().equals(cor1)){
+                        
+                        qtd_cor1++;
+                    }
+                    else{
+                        
+                         qtd_cor2++;
+                    }
+                }
+                //Caso uma das cores já completou 12 estados os estados que faltam 
+                //irão receber a cor que não chegou a quantidade de 12 estados
+                else{
+                    if(this.cor_escolhida(qtd_cor1, qtd_cor2)==1){
+                        this.estados.get(i).setCor(cor1);
+                    }
+                    else{
+                        this.estados.get(i).setCor(cor2);
+                    }
+                    
+                    
+                }
             }
             
         }
-        return null;
+       // return null;
     }
             
     /**

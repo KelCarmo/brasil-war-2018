@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -81,6 +81,7 @@ public class Jogar {
     public void jogar (){
         this.iniciando_o_jogo(2);
         this.iniciando_o_mapa();
+        this.mapa.distruibuir_cor_dois_jogadores(2, "AZUL", "BRANCO");
         this.mapa.exibir_mapa();
     }
     
